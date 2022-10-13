@@ -2,8 +2,16 @@ console.log("Script attached");
 /*----------- Exercise #1: SELECTING/MANIPULATING ELEMENTS -----------*/
 
 // Select Node #1 and change the text to: "I used the getElementById("node1") method to access this"
+let node1 = document.getElementById("node1");
+
+node1.textContent = "I used the getElementById(node1) method to access this";
 
 // Select Node #2 and change the text to: "I used the getElementByClassName("node2") method to access this" */
+let node2 = document.getElementsByClassName("node2");
+
+node2.textContent = "I used the getElementByClassName(node2) method to access this";
+let parent = document.querySelector("p");
+
 
 // Select ALL the h3 tags and change the text to: "I used the getElementByTagName("h3") method to access all of these" */
 
