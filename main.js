@@ -39,9 +39,13 @@ parent.insertBefore(link,p);
 /*----------- Exercise #3: REMOVING/REPLACING ELEMENTS/OBJECTS -----------*/
 
 // TODO: Replace the "Child Node" with a new <p> element that reads "New Child Node"
-
+let p2 = document.createElement('p');
+let p1 = document.querySelector('#N1');
+p2.textContent = "New Child Node";
+let parent2 = document.querySelector('#exercise-container3');
+parent2.replaceChild(p2,p1);
 // TODO: Remove the "New Child Node"
-
+parent2.removeChild(p2);
 /*----------- Exercise #4: LIST ITEMS ----------- */
 // Use the following array of values to generate a list on the DOM
 
@@ -49,8 +53,16 @@ let list = [ "apples", "bananas", "carrots", "dragon fruit", "eggplant", "fish",
 
 
 // TODO: Create an unordered list element
+let ul = document.createElement('ul');
 
 // TODO: Iterate over the array values, and create a list item element for each
+for (i = 0; i < list.length; i++){
+  let li = document.createElement('li');
+  li.textContent = list[i];
+  ul.appendChild(li);
+}
+let parent3 = document.querySelector('div#container');
+parent3.appendChild(ul);
 
 // TODO: Append the new list items to the unordered list element
 
@@ -62,3 +74,43 @@ let list = [ "apples", "bananas", "carrots", "dragon fruit", "eggplant", "fish",
 // -> "Clicking the button triggers the onclick event, which calls the JS function show()... which alerts the user"
 // This div should be a 'modal' that covers the main content on the screen
 // BONUS: The modal popup should be able to be closed. Refactor for this functionality
+function handleEsc(event) {
+  if (event.key == "Escape") {
+    document.body.removeChild(document.querySelector("#modal"));
+  }
+}
+
+function show(event) {
+  window.addEventListener("keyup", handleEsc);
+  let modalContainer = document.createElement("div");
+  let modalBody = document.createElement("div");
+  let title = document.createElement("h2");
+  let content = document.createElement("p");
+  let closeButton = document.createElement("button");
+
+  title.textContent = "Press Me";
+  content.textContent = "What do you want to do?";
+  closeButton.textContent = "Close Me";
+  closeButton.addEventListener("click", (event) => {
+    document.body.removeChild(modalContainer);
+    window.removeEventListener("keyup", handleEsc);
+  });
+
+  modalContainer.id = "modal"
+  modalBody.classList.add("modal-card");
+//this part took me a while
+  modalContainer.addEventListener("click", (event) => {
+    console.log(event);
+    if (event.target == modalContainer) {
+      document.body.removeChild(modalContainer);
+      window.removeEventListener("keyup", handleEsc);
+    }
+  });
+
+  modalBody.append(title, content, closeButton);
+  modalContainer.appendChild(modalBody);
+  document.body.appendChild(modalContainer);
+}
+
+let btn = document.querySelector("#btn");
+btn.addEventListener("click", show);
